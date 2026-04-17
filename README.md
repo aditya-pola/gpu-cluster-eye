@@ -2,9 +2,9 @@
 
 Lightweight GPU cluster monitoring dashboard. Track uptime and usage (VRAM + Compute) across multiple servers over 90 days. Static site hosted on GitHub Pages — no dedicated server required.
 
-![Uptime Tab](docs/screenshot-uptime.png)
-
-![Usage Tab](docs/screenshot-usage.png)
+| Uptime | Usage |
+|--------|-------|
+| ![Uptime](docs/screenshot-uptime.png) | ![Usage](docs/screenshot-usage.png) |
 
 ## Features
 
@@ -79,7 +79,7 @@ Collector (cron hourly)
     ├── SSH to each server
     ├── Run nvidia-smi
     ├── Parse VRAM + Compute
-    ├── Update public/data/status.json
+    ├── Update docs/data/status.json
     └── git commit + push
            │
            ▼
@@ -105,6 +105,6 @@ Collector (cron hourly)
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+MIT License — see [LICENSE](LICENSE)
 
-You are free to use, modify, and distribute this software for any purpose.
+**Attribution required**: When using or redistributing this software, please credit the original author (Aditya Pola).
