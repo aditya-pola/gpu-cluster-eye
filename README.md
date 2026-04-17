@@ -56,7 +56,7 @@ If the collector machine goes down, the dashboard shows gray "no data" bars for 
 ## Enable GitHub Pages
 
 1. Push to GitHub
-2. Settings → Pages → Source: `main` branch, `/public` folder
+2. Settings → Pages → Source: `main` branch, `/docs` folder
 3. Access at: `https://YOUR_USERNAME.github.io/gpu-cluster-eye/`
 
 ## Configuration

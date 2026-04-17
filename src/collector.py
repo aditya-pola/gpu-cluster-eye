@@ -19,7 +19,7 @@ import yaml
 
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-STATUS_FILE = PROJECT_ROOT / "public" / "data" / "status.json"
+STATUS_FILE = PROJECT_ROOT / "docs" / "data" / "status.json"
 SERVERS_FILE = PROJECT_ROOT / "servers.yaml"
 RETENTION_DAYS = 90
 
