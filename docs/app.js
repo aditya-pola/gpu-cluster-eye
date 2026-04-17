@@ -275,9 +275,10 @@ function setupTooltip() {
     const mode = bar.dataset.mode;
     const date = segment.dataset.date;
 
-    let content = `<div class="tooltip-date">${date || 'No data'}</div>`;
+    const hasDate = date && date !== 'null';
+    let content = `<div class="tooltip-date">${hasDate ? date : 'No data'}</div>`;
 
-    if (date) {
+    if (hasDate) {
       if (mode === 'uptime') {
         const downHours = parseInt(segment.dataset.downHours, 10);
         const networkHours = parseInt(segment.dataset.networkHours, 10);
@@ -289,7 +290,9 @@ function setupTooltip() {
       } else if (mode === 'vram') {
         const value = parseFloat(segment.dataset.value);
         const vramTotal = parseFloat(segment.dataset.vramTotal);
-        if (value === 0) {
+        if (isNaN(vramTotal) || vramTotal === 0) {
+          content += `<div class="tooltip-status">No data</div>`;
+        } else if (value === 0) {
           content += `<div class="tooltip-status">Idle</div>`;
         } else {
           const vramMB = (value / 100) * vramTotal;
@@ -297,7 +300,9 @@ function setupTooltip() {
         }
       } else if (mode === 'compute') {
         const value = parseFloat(segment.dataset.value);
-        if (value === 0) {
+        if (isNaN(value)) {
+          content += `<div class="tooltip-status">No data</div>`;
+        } else if (value === 0) {
           content += `<div class="tooltip-status">Idle</div>`;
         } else {
           content += `<div class="tooltip-status">${value.toFixed(1)}% Compute</div>`;

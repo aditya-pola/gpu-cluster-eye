@@ -131,7 +131,7 @@ def git_push():
         os.chdir(PROJECT_ROOT)
 
         subprocess.run(
-            ["git", "add", "public/data/status.json"],
+            ["git", "add", "docs/data/status.json"],
             check=True,
             capture_output=True,
         )
