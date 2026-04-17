@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gpu-cluster-eye</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>gpu-cluster-eye</h1>
+      <nav class="tabs">
+        <button class="tab active" data-tab="uptime">Uptime</button>
+        <button class="tab" data-tab="usage">Usage</button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="status-banner" id="status-banner">
+        <span class="status-dot"></span>
+        <span class="status-text">Loading...</span>
+      </div>
+
+      <div class="last-updated" id="last-updated"></div>
+
+      <section id="uptime-panel" class="panel active">
+        <div class="servers-list" id="uptime-servers"></div>
+      </section>
+
+      <section id="usage-panel" class="panel">
+        <div class="servers-list" id="usage-servers"></div>
+      </section>
+
+      <div class="timeline-labels">
+        <span>90 days ago</span>
+        <span>Today</span>
+      </div>
+
+      <div class="legend" id="uptime-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#76ac29"></span>0h down</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#e6a92b"></span>1-2h</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#f08530"></span>3-5h</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#e95c32"></span>6h+</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#9ca3af"></span>No Data</span>
+      </div>
+      <div class="legend" id="usage-legend" style="display:none">
+        <span class="legend-item"><span class="legend-dot" style="background:#76ac29"></span>0-10%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#e6a92b"></span>10-50%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#f08530"></span>50-80%</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#e95c32"></span>80%+</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#9ca3af"></span>No Data</span>
+      </div>
+    </main>
+
+    <footer>
+      <p>Data collected hourly via SSH</p>
+    </footer>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

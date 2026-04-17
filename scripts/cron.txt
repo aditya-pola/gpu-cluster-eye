@@ -1,0 +1,4 @@
+# GPU-Eye hourly collection
+# Edit the path below, then run: crontab scripts/cron.txt
+
+0 * * * * cd /path/to/gpu-eye && python3 src/collector.py >> /var/log/gpu-eye.log 2>&1
