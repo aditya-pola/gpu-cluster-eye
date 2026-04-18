@@ -247,6 +247,43 @@ function getUsageColor(value) {
   return COLORS.red;
 }
 
+function getHourlyData(server, date, mode) {
+  const samples = statusData.samples || [];
+  const hourly = [];
+
+  samples.forEach(sample => {
+    const sampleDate = sample.timestamp.split('T')[0];
+    if (sampleDate !== date) return;
+
+    const hour = sample.timestamp.split('T')[1].substring(0, 5);
+    const serverData = sample.data[server];
+
+    if (!serverData) return;
+
+    if (mode === 'uptime') {
+      hourly.push({
+        hour,
+        status: serverData.reachable ? 'up' : 'down'
+      });
+    } else if (mode === 'vram') {
+      if (serverData.reachable && serverData.vram_total_mb > 0) {
+        const pct = (serverData.vram_used_mb / serverData.vram_total_mb) * 100;
+        hourly.push({ hour, value: pct.toFixed(1) });
+      } else {
+        hourly.push({ hour, value: serverData.reachable ? '0' : 'down' });
+      }
+    } else if (mode === 'compute') {
+      if (serverData.reachable) {
+        hourly.push({ hour, value: (serverData.compute_percent || 0).toFixed(1) });
+      } else {
+        hourly.push({ hour, value: 'down' });
+      }
+    }
+  });
+
+  return hourly.sort((a, b) => a.hour.localeCompare(b.hour));
+}
+
 function setupTabs() {
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -279,6 +316,8 @@ function setupTooltip() {
     let content = `<div class="tooltip-date">${hasDate ? date : 'No data'}</div>`;
 
     if (hasDate) {
+      const hourly = getHourlyData(server, date, mode);
+
       if (mode === 'uptime') {
         const downHours = parseInt(segment.dataset.downHours, 10);
         const networkHours = parseInt(segment.dataset.networkHours, 10);
@@ -287,6 +326,14 @@ function setupTooltip() {
         if (networkHours > 0) parts.push(`${networkHours}h network issue`);
         if (parts.length === 0) parts.push('No downtime');
         content += `<div class="tooltip-status">${parts.join(', ')}</div>`;
+        if (hourly.length > 0) {
+          content += `<div class="tooltip-hourly">`;
+          hourly.forEach(h => {
+            const icon = h.status === 'up' ? '●' : '○';
+            content += `<span class="hourly-item">${h.hour} ${icon}</span>`;
+          });
+          content += `</div>`;
+        }
       } else if (mode === 'vram') {
         const value = parseFloat(segment.dataset.value);
         const vramTotal = parseFloat(segment.dataset.vramTotal);
@@ -295,8 +342,14 @@ function setupTooltip() {
         } else if (value === 0) {
           content += `<div class="tooltip-status">Idle</div>`;
         } else {
-          const vramMB = (value / 100) * vramTotal;
-          content += `<div class="tooltip-status">${value.toFixed(1)}% VRAM (${Math.round(vramMB)} / ${Math.round(vramTotal)} MB)</div>`;
+          content += `<div class="tooltip-status">Peak: ${value.toFixed(1)}% VRAM</div>`;
+        }
+        if (hourly.length > 0) {
+          content += `<div class="tooltip-hourly">`;
+          hourly.forEach(h => {
+            content += `<span class="hourly-item">${h.hour} → ${h.value}%</span>`;
+          });
+          content += `</div>`;
         }
       } else if (mode === 'compute') {
         const value = parseFloat(segment.dataset.value);
@@ -305,7 +358,14 @@ function setupTooltip() {
         } else if (value === 0) {
           content += `<div class="tooltip-status">Idle</div>`;
         } else {
-          content += `<div class="tooltip-status">${value.toFixed(1)}% Compute</div>`;
+          content += `<div class="tooltip-status">Peak: ${value.toFixed(1)}% Compute</div>`;
+        }
+        if (hourly.length > 0) {
+          content += `<div class="tooltip-hourly">`;
+          hourly.forEach(h => {
+            content += `<span class="hourly-item">${h.hour} → ${h.value}%</span>`;
+          });
+          content += `</div>`;
         }
       }
     }
