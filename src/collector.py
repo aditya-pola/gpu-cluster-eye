@@ -116,8 +116,8 @@ def collect_gpu_info(server):
 
 def prune_old_samples(status):
     """Remove samples older than RETENTION_DAYS."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=RETENTION_DAYS)
-    cutoff_str = cutoff.isoformat()
+    cutoff = datetime.now() - timedelta(days=RETENTION_DAYS)
+    cutoff_str = cutoff.strftime("%Y-%m-%dT%H:%M:%S")
 
     status["samples"] = [
         s for s in status["samples"]
@@ -185,7 +185,7 @@ def main():
     print(f"Collecting from {len(servers)} servers...")
 
     status = load_status()
-    timestamp = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0).isoformat()
+    timestamp = datetime.now().replace(minute=0, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%S")
 
     sample = {"timestamp": timestamp, "data": {}}
 
