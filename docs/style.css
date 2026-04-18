@@ -241,9 +241,11 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
   font-size: 0.875rem;
   color: var(--text-muted);
 }
