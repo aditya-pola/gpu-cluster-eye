@@ -393,11 +393,19 @@ function applyTheme(theme) {
     document.documentElement.removeAttribute('data-theme');
   }
   const btn = document.querySelector('[data-action="toggle-theme"]');
-  if (btn) btn.textContent = theme === 'light' ? 'Light' : 'Dark';
+  if (btn) {
+    btn.textContent = theme === 'light' ? 'Light' : 'Dark';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  }
 }
 
 function initTheme() {
-  const saved = localStorage.getItem('theme');
+  let saved = null;
+  try {
+    saved = localStorage.getItem('theme');
+  } catch (err) {
+    saved = null;
+  }
   applyTheme(saved === 'light' ? 'light' : 'dark');
 }
 
@@ -406,7 +414,11 @@ function setupThemeToggle() {
   if (!btn) return;
   btn.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    localStorage.setItem('theme', next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch (err) {
+      // storage unavailable; theme still applies for this session
+    }
     applyTheme(next);
   });
 }

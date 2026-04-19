@@ -69,28 +69,7 @@ h1 {
   gap: 0.5rem;
 }
 
-.tab {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  transition: all 0.15s ease;
-}
-
-.tab:hover {
-  border-color: var(--text-muted);
-}
-
-.tab.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
-
+.tab,
 .theme-toggle {
   padding: 0.5rem 1rem;
   border: 1px solid var(--border);
@@ -101,12 +80,21 @@ h1 {
   font-weight: 500;
   color: var(--text-muted);
   transition: all 0.15s ease;
-  margin-left: 0.5rem;
+}
+
+.tab:hover,
+.theme-toggle:hover {
+  border-color: var(--text-muted);
 }
 
 .theme-toggle:hover {
-  border-color: var(--text-muted);
   color: var(--text);
+}
+
+.tab.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }
 
 main {
