@@ -386,4 +386,31 @@ function setupTooltip() {
   });
 }
 
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  const btn = document.querySelector('[data-action="toggle-theme"]');
+  if (btn) btn.textContent = theme === 'light' ? 'Light' : 'Dark';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+}
+
+function setupThemeToggle() {
+  const btn = document.querySelector('[data-action="toggle-theme"]');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  });
+}
+
+initTheme();
+setupThemeToggle();
 init();
