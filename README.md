@@ -14,12 +14,23 @@ Lightweight GPU cluster monitoring dashboard. Track uptime and usage (VRAM + Com
 - **Static hosting** — GitHub Pages, no backend server needed
 - **SSH-based collection** — Works with any Linux server running nvidia-smi
 
-## Quick Start
+## Setup
+
+### 1. Fork and create your own repo
+
+1. Click **Fork** (or **Use this template**) on the GitHub repo page
+2. Create a **private** repo under your own account — pick any name you like (e.g. `my-gpu-dashboard`)
+   - Private keeps your SSH credentials safe even if you accidentally commit them
+   - The repo name becomes your GitHub Pages URL: `https://USERNAME.github.io/REPO_NAME/`
+
+> **Credential safety:** `servers.yaml` is already in `.gitignore`, so your SSH credentials won't be committed. A private repo is an extra layer of protection.
+
+### 2. Clone and configure
 
 ```bash
-# Clone
-git clone https://github.com/YOUR_USERNAME/gpu-cluster-eye.git
-cd gpu-cluster-eye
+# Clone your new private repo
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
 
 # Install dependencies
 pip install paramiko pyyaml
@@ -35,6 +46,10 @@ python3 src/collector.py --dry-run
 python3 src/collector.py
 ```
 
+### 3. Customize (optional)
+
+To change the dashboard title, edit `docs/index.html` and update the `<title>` and `<h1>` tags.
+
 ## Setup Cron (Hourly Collection)
 
 Run the cron on **one machine** that can:
@@ -48,7 +63,7 @@ This is typically one of your GPU servers or a management node.
 crontab -e
 
 # Add:
-0 * * * * cd /path/to/gpu-cluster-eye && python3 src/collector.py >> /var/log/gpu-cluster-eye.log 2>&1
+0 * * * * cd /path/to/your-repo && python3 src/collector.py >> /var/log/gpu-eye.log 2>&1
 ```
 
 If the collector machine goes down, the dashboard shows gray "no data" bars for those hours.
@@ -57,7 +72,7 @@ If the collector machine goes down, the dashboard shows gray "no data" bars for 
 
 1. Push to GitHub
 2. Settings → Pages → Source: `main` branch, `/docs` folder
-3. Access at: `https://YOUR_USERNAME.github.io/gpu-cluster-eye/`
+3. Access at: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
 
 ## Configuration
 
