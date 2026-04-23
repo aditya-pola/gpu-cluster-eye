@@ -10,12 +10,30 @@
   --orange: #f08530;
   --red: #e95c32;
   --gray: #9ca3af;
+  --bg: #000000;
+  --bg-card: #111111;
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+  --border: #1f2937;
+  --tooltip-bg: rgba(17, 17, 17, 0.97);
+  --tooltip-text: #f3f4f6;
+  --tooltip-text-muted: #d1d5db;
+  --tooltip-divider: rgba(255, 255, 255, 0.2);
+  --tooltip-text-subtle: #9ca3af;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="light"] {
   --bg: #f9fafb;
   --bg-card: #ffffff;
   --text: #1f2937;
   --text-muted: #6b7280;
   --border: #e5e7eb;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --tooltip-bg: rgba(31, 41, 55, 0.95);
+  --tooltip-text: #f9fafb;
+  --tooltip-text-muted: #e5e7eb;
+  --tooltip-divider: rgba(255, 255, 255, 0.25);
+  --tooltip-text-subtle: #d1d5db;
 }
 
 body {
@@ -51,7 +69,8 @@ h1 {
   gap: 0.5rem;
 }
 
-.tab {
+.tab,
+.theme-toggle {
   padding: 0.5rem 1rem;
   border: 1px solid var(--border);
   background: var(--bg-card);
@@ -63,13 +82,18 @@ h1 {
   transition: all 0.15s ease;
 }
 
-.tab:hover {
+.tab:hover,
+.theme-toggle:hover {
   border-color: var(--text-muted);
+}
+
+.theme-toggle:hover {
+  color: var(--text);
 }
 
 .tab.active {
   background: var(--text);
-  color: white;
+  color: var(--bg);
   border-color: var(--text);
 }
 
@@ -278,8 +302,9 @@ footer {
 
 .tooltip {
   position: fixed;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  border: 1px solid var(--border);
   padding: 0.5rem 0.75rem;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -300,7 +325,7 @@ footer {
 }
 
 .tooltip-status {
-  color: #d1d5db;
+  color: var(--tooltip-text-muted);
 }
 
 .tooltip-hourly {
@@ -309,9 +334,9 @@ footer {
   gap: 0.125rem;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--tooltip-divider);
   font-size: 0.7rem;
-  color: #9ca3af;
+  color: var(--tooltip-text-subtle);
 }
 
 .hourly-item {

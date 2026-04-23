@@ -386,4 +386,43 @@ function setupTooltip() {
   });
 }
 
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  const btn = document.querySelector('[data-action="toggle-theme"]');
+  if (btn) {
+    btn.textContent = theme === 'light' ? 'Light' : 'Dark';
+    btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  }
+}
+
+function initTheme() {
+  let saved = null;
+  try {
+    saved = localStorage.getItem('theme');
+  } catch (err) {
+    saved = null;
+  }
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+}
+
+function setupThemeToggle() {
+  const btn = document.querySelector('[data-action="toggle-theme"]');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    try {
+      localStorage.setItem('theme', next);
+    } catch (err) {
+      // storage unavailable; theme still applies for this session
+    }
+    applyTheme(next);
+  });
+}
+
+initTheme();
+setupThemeToggle();
 init();

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>gpu-cluster-eye</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -13,6 +20,7 @@
       <nav class="tabs">
         <button class="tab active" data-tab="uptime">Uptime</button>
         <button class="tab" data-tab="usage">Usage</button>
+        <button class="theme-toggle" data-action="toggle-theme" aria-pressed="true">Dark</button>
       </nav>
     </header>
 
